@@ -1,0 +1,46 @@
+信号灯集
+
+
+使用步骤
+1.key
+2.
+
+intsemid=semget(key,2,IPC_CREAT|IPC_EXCL|0666)
+if(semid<=0)
+{
+    if(errno=)
+}else
+{
+
+}
+else
+{
+    union sem_t sem;
+
+
+    semctl(semid,0,SETVAL,sem);
+}
+
+
+3.semctl()
+sturct sembuf s
+4.semop(semid,&s,1)
+4.semop(semid,&s,1)
+5.semctl(semid,0,IPC_RMID);
+
+
+消息队列
+
+函数API
+sturct msgbuf msg
+{
+    long type;
+}
+
+1.key
+2.打开创建 
+int msgid;
+msgid = msgget(key,IPC_CREAT|IPC_EXCL|0666)
+3.发送msgsnd(msgid,&msg,sizeof(msg)-sizeof(long),1)
+4.读取msgrcv(msgid,&msg,sizeof(msg)-sizeof(long),1,0)
+5.删除msgctl(msgid,IPC_RMID,NULL);

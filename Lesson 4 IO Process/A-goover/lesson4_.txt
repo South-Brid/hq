@@ -1,0 +1,14 @@
+1.关于fork函数
+fork函数返回两个值，子进程得pid为0,父进程得pid为子进子进程得pid
+2.关于wait和waitpid
+wait(NULL);
+waitpid(-1,NULL,WNOHANG)
+第一个参数 >0为子进程得pid -1代表为任意一个结束得i子进程
+第二个参数 为进程结束得状态
+第三个参数 选项 0阻塞 WNOHANG 非阻塞
+3.exit和_exit
+exit能刷新缓存区
+_exit不能刷新缓存区
+4.exit和return得区别
+在子函数中exit能直接结束当前进程，return是结束当前子函数并返回值
+5.守护进程

@@ -1,0 +1,8 @@
+1.静态库得制作
+(1)gcc -c add.c -o add.o
+(2)ar crs libmyadd.a add.o
+(3)gcc main.c -L./static -lmyadd -I ./include
+2.动态库得制作 动态库文件得后缀是so
+(1)gcc -fPIC -c add.c -o add.o
+(2)gcc -shared -o libmyadd.so add.o
+(3)gcc main.c -L -lmyadd -I ./include

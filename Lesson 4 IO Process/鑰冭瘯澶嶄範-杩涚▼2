@@ -1,0 +1,67 @@
+进程通信之信号（上一次出现信号还是在线程同步中得信号量当中出现）
+信号通信概述：
+1.是在软件层次上对中断机制得一次模拟，是一种异步通信
+2.是用户空间和内核空间得交互
+3.当进程处于未运行得状态，信号由内核保存，直到进程运行信号就会传输给进程
+
+进程间得几种响应机制：
+忽略信号
+捕捉信号
+缺省操作
+
+信号的API
+
+
+kill(pid,SIGKILL);//给制定pid发送信号
+raise(SIGKILL);//给自己发送信号
+pause();//后台挂起进程
+alarm(10);//设置一个定时器
+//按照最后一个定时器出现为准
+signal(信号，SIG_IGN);//忽略
+signal(信号，SIG_EFL);//缺省
+
+void handly(int arg)
+{
+    if(arg == 10)
+    {}
+}
+
+signal(信号，handly);//捕捉
+
+进程通信之共享内存  在共享内存中往后才出现了key值
+特点：高效
+在内核区开辟出一块内存空间用来传输
+
+使用步骤
+1.创建key值
+fotk函数
+2.创建共享内存和打开
+int shmid;
+shmid=shemget(key,128,IPC_CREAT|O_EXCAL|0666)
+if(semid<=0)
+{
+    if(errno == EEXIST)
+    {
+        shmid=shemget(key,128,0666);
+    }else
+    {
+        perror("shemget");
+        return -1;
+    }
+}
+3.映射共享内存
+void*p=(void*)shmat(shmid,NULL,0);//中间一个最后一个，一般选用默认参数NULL和0
+if(p == (void*)-1)
+{
+    perror("shmat");
+    return -1;
+}
+
+4.取消映射
+shmdt(p);
+
+5.删除共享内存
+shmctl(shmid,IPC_RMID,NULL);
+
+ipcs -m
+ipcrm -m

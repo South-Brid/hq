@@ -1,0 +1,60 @@
+1.线程和线程间得通信
+函数：
+创建线程
+void * handly(void *arg)
+{
+    printf("hello world");
+}
+pthread_t tip;    
+if(pthread_create(&tip,NULL,handly,NULL)!=0)
+{
+    error;
+}
+回收线程
+pthread_join(tip,NULL);//截至目前只有pthread_join
+结束线程
+pthread_exit(NULL);
+
+2.线程同步使用信号量
+函数接口
+sem_t sem;
+sem_init(&sem,0,0);//信号量得初始化
+sem_wait(&sem);//p操作
+sem_post(&sem);//v操作
+
+3.线程互斥互斥锁
+初始化锁
+pthread_mutex_t lock;
+pthread_mutex_init(&lock,NULL);
+加锁
+pthread_mutex_lock(&lock);
+解锁
+pthread_mutex_unlock(&lock);
+销毁锁
+pthread_mutex_destory(&lock);
+
+死锁产生得条件
+1.互相排斥
+2.不可抢占
+3.请求和战友
+4.循环等待
+
+4.条件变量
+用与互斥锁得同步操作
+
+pthread_cond_t cond;
+
+条件变量初始化
+pthread_cond_init(&cond,NULL);//和初始化条件变量类似
+等待产生
+pthread_cond_wait(&cond,&lock);//和前面完全不同，wait里面传两个参数
+产生
+pthread_cond_signal(&cond);
+
+存钱和取钱例子
+
+#incude<stdio.h>
+main()
+{
+    ptread
+}

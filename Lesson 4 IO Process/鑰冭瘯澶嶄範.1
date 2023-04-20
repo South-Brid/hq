@@ -1,0 +1,55 @@
+存钱和取钱例子
+
+#incude<stdio.h>
+int num = 0;
+void *handly(void*arg)
+{
+    pthread_mutex_lock(&lock);
+    if(num<100)
+    pthread_cond_wait(&cond,&lock);
+    num=num-100;
+    printf("%d\n",num);
+    if(num<100)
+    {
+        pthread_cond_signal(&cond);
+    }
+    pthread_mutex_unlock(&lock);    
+}
+
+main()
+{
+    pthread_t tip;
+    if(pthread_create(&tip,NULL,handly,NULL)!=0)
+    {
+        perror("create");
+        return -1;
+    }
+
+    pthread_mutex lock;
+    if(pthread_mutex_init(&lock,NULL)!=0)
+    {
+        perror("mutex_init");
+        return -1;
+    }
+
+    pthread_cond_t cond;
+
+    if(pthread_cond_init(&cond,NULL)!=0)
+    {
+        perror("cond_init");
+        return -1;
+    }
+
+    
+    while(1)
+    {
+        pthread_mutex_lock(&lock);
+        if(num>=100)
+        pthread_cond_wait(&cond,&lock);
+        scanf("%d",&num);
+        if(num>=100)
+        pthread_cond_signal(&cond);    
+        pthread_mutex_unlock(&lock);
+    }
+
+}
